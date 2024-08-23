@@ -1,0 +1,29 @@
+def simple_assembler(program):
+    registers = {}
+    pointer = 0
+
+    while pointer < len(program):
+        ins = program[pointer].split()
+        operation = ins[0]
+        x = ins[1]
+        
+        if operation == "mov":
+            if ins[2].isalpha():
+                registers[x] = registers[ins[2]]
+            else:
+                registers[x] = int(ins[2])
+
+        elif operation == "inc":
+            registers[x] += 1
+
+        elif operation == "dec":
+            registers[x] -= 1
+
+        elif operation == "jnz":
+            y = int(ins[2]) if ins[2].lstrip("-").isdigit() else registers[ins[2]]
+            check = int(x) if x.lstrip("-").isdigit() else registers[x]
+            if check != 0:
+                pointer += y
+                continue
+        pointer += 1
+    return registers
