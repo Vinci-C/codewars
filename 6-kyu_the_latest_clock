@@ -1,0 +1,13 @@
+from itertools import permutations
+
+def latest_clock(a, b, c, d):
+    max_time = -1
+    for time in permutations([a, b, c, d]):
+        hours, minutes = time[0] * 10 + time[1], time[2] * 10 + time[3]
+        if 0 <= hours < 24 and 0 <= minutes < 60:
+            max_time = max(max_time, hours * 60 + minutes)
+    
+    if max_time == -1:
+        return ""
+    
+    return f"{max_time // 60:02}:{max_time % 60:02}"
